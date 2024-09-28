@@ -46,3 +46,103 @@ To use this tool, you'll need to insert the following controls into the Excel VB
 ## Example
 
 ### Input (ROT13 Encoded Text):
+Gur cnffjbeq vf 7k16JArUVv5LxVuJfsSVdbbtaHGlw9D4
+
+### Decoded (After Clicking `cmdRotate`):
+The password is 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+
+
+### Salted Output (After Clicking `cmdAddSalt`):
+T!h&epas!sw&or!d is$7x!1&6W!Ne&HI!i5$Yk!Ih&wfs!FI&qoo!gnU&Ty!j9$Q4!
+
+
+### Reverted Output (After Clicking `cmdRemoveSalt`):
+The password is 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+
+
+## Code Snippets
+
+### ROT13 Decoding Function
+```vba
+Function ROT13(sInput As String) As String
+    Dim sOutput As String
+    Dim i As Integer
+    Dim ch As String
+    Dim charCode As Integer
+    
+    sOutput = ""
+    
+    For i = 1 To Len(sInput)
+        ch = Mid(sInput, i, 1)
+        charCode = Asc(ch)
+        
+        ' Check if the character is uppercase
+        If charCode >= 65 And charCode <= 90 Then
+            ' Rotate the character by 13 places in the alphabet
+            charCode = ((charCode - 65 + 13) Mod 26) + 65
+            
+        ' Check if the character is lowercase
+        ElseIf charCode >= 97 And charCode <= 122 Then
+            ' Rotate the character by 13 places in the alphabet
+            charCode = ((charCode - 97 + 13) Mod 26) + 97
+        End If
+        
+        sOutput = sOutput & Chr(charCode)
+    Next i
+    
+    ROT13 = sOutput
+End Function
+
+' Adding Salt Function
+Function AddSalt(decodedText As String) As String
+    Dim saltedText As String
+    Dim i As Integer
+    Dim addChar As String
+    
+    saltedText = ""
+    
+    For i = 1 To Len(decodedText)
+        ' Append the current character from the decoded text
+        saltedText = saltedText & Mid(decodedText, i, 1)
+        
+        ' Apply salt according to the position
+        If i Mod 6 = 0 Then
+            addChar = "$"
+        ElseIf i Mod 3 = 0 Then
+            addChar = "&"
+        ElseIf i Mod 2 = 0 Then
+            addChar = "!"
+        Else
+            addChar = ""
+        End If
+        
+        ' Append the salted character (if any)
+        saltedText = saltedText & addChar
+    Next i
+    
+    AddSalt = saltedText
+End Function
+
+' Removing Salt Function
+Function RemoveSalt(saltedText As String) As String
+    Dim cleanText As String
+    Dim i As Integer
+    Dim currentChar As String
+    
+    cleanText = ""
+    
+    For i = 1 To Len(saltedText)
+        currentChar = Mid(saltedText, i, 1)
+        
+        ' Only add the character to the cleanText if it is not one of the salt characters
+        If currentChar <> "&" And currentChar <> "!" And currentChar <> "$" Then
+            cleanText = cleanText & currentChar
+        End If
+    Next i
+    
+    RemoveSalt = cleanText
+End Function
+
+
+### Overview
+This README file provides detailed instructions on how to use the Excel VBA-based ROT13 decoder and salting tool, along with example code snippets and a step-by-step guide.
