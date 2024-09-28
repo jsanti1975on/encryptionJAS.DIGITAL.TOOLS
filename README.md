@@ -1,3 +1,4 @@
+![ROT13 PROJECT IMAGE 1](https://github.com/user-attachments/assets/68b84c37-8eb8-4968-bbce-de20b7702557)
 # VBA ROT13 Decoder with Salting Feature
 
 This project is a simple Excel-based VBA tool for decoding ROT13-encoded text, salting the decoded text with specific characters, and reverting the salted string back to its original form.
