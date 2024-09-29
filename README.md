@@ -65,6 +65,22 @@ The password is 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
 
 ### ROT13 Decoding Function
 ```vba
+
+Private Sub cmdRotate_Click()
+    ' Decode the text from txtInput and display it in txtOutput
+    txtOutput.Text = ROT13(txtInput.Text)
+End Sub
+
+Private Sub cmdAddSalt_Click()
+    ' Add salt to the decoded text and display it in txtSalted
+    txtSalted.Text = AddSalt(txtOutput.Text)
+End Sub
+
+Private Sub cmdRemoveSalt_Click()
+    ' Call the RevertSaltedText function to remove salt and update txtOutput
+    RevertSaltedText
+End Sub
+
 Function ROT13(sInput As String) As String
     Dim sOutput As String
     Dim i As Integer
@@ -94,10 +110,10 @@ Function ROT13(sInput As String) As String
     ROT13 = sOutput
 End Function
 
-' Adding Salt Function
 Function AddSalt(decodedText As String) As String
     Dim saltedText As String
     Dim i As Integer
+    Dim insertPos As Integer
     Dim addChar As String
     
     saltedText = ""
@@ -124,7 +140,6 @@ Function AddSalt(decodedText As String) As String
     AddSalt = saltedText
 End Function
 
-' Removing Salt Function
 Function RemoveSalt(saltedText As String) As String
     Dim cleanText As String
     Dim i As Integer
@@ -144,22 +159,9 @@ Function RemoveSalt(saltedText As String) As String
     RemoveSalt = cleanText
 End Function
 
-
-' Below are the click events needed for the project
-Private Sub cmdRotate_Click()
-    ' Decode the text from txtInput and display it in txtOutput
-    txtOutput.Text = ROT13(txtInput.Text)
+Sub RevertSaltedText()
+    ' Remove the salt from the text in txtSalted and display the result in txtOutput
+    txtOutput.Text = RemoveSalt(txtSalted.Text)
 End Sub
 
-Private Sub cmdAddSalt_Click()
-    ' Add salt to the decoded text and display it in txtSalted
-    txtSalted.Text = AddSalt(txtOutput.Text)
-End Sub
 
-Private Sub cmdRemoveSalt_Click()
-    ' Call the RevertSaltedText function to remove salt and update txtOutput
-    RevertSaltedText
-End Sub
-    
-    RemoveSalt = cleanText
-End Function
