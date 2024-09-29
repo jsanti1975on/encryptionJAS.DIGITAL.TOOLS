@@ -140,6 +140,21 @@ Function RemoveSalt(saltedText As String) As String
             cleanText = cleanText & currentChar
         End If
     Next i
+' Below are the click events needed for the project
+Private Sub cmdRotate_Click()
+    ' Decode the text from txtInput and display it in txtOutput
+    txtOutput.Text = ROT13(txtInput.Text)
+End Sub
+
+Private Sub cmdAddSalt_Click()
+    ' Add salt to the decoded text and display it in txtSalted
+    txtSalted.Text = AddSalt(txtOutput.Text)
+End Sub
+
+Private Sub cmdRemoveSalt_Click()
+    ' Call the RevertSaltedText function to remove salt and update txtOutput
+    RevertSaltedText
+End Sub
     
     RemoveSalt = cleanText
 End Function
