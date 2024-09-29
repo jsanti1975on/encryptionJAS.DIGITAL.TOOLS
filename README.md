@@ -140,6 +140,8 @@ Function RemoveSalt(saltedText As String) As String
             cleanText = cleanText & currentChar
         End If
     Next i
+End Function
+
 ' Below are the click events needed for the project
 Private Sub cmdRotate_Click()
     ' Decode the text from txtInput and display it in txtOutput
